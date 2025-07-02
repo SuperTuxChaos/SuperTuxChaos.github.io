@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperTuxChaos - Battle Royale Open Source</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-tertiary {
+            background-color: #9b59b6;
+        }
+        
+        .btn-tertiary:hover {
+            background-color: #8e44ad;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .game-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.2rem;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature {
+            flex: 1 1 300px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .characters {
+            background-color: var(--light-color);
+        }
+        
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .character-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .character-image {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+        
+        .character-info {
+            padding: 1.5rem;
+        }
+        
+        .character-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .locked-character {
+            position: relative;
+        }
+        
+        .locked-character::after {
+            content: "BLOQUEADO";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .social-links {
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .download-platform {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .platform-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .character-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>SuperTuxChaos</h1>
+            <p class="tagline">El Battle Royale Open Source más caótico</p>
+            <a href="#download" class="btn">Descargar Ahora</a>
+            <a href="#characters" class="btn btn-secondary">Conoce a los Personajes</a>
+        </div>
+    </header>
+    
+    <section id="about">
+        <div class="container">
+            <h2>Sobre el Juego</h2>
+            <p class="game-description">
+                SuperTuxChaos es un emocionante juego Battle Royale desarrollado con Panda3D y Python. 
+                Únete al caos con tus personajes favoritos del mundo open source en una batalla épica 
+                donde solo el más fuerte sobrevivirá.
+            </p>
+            
+            <div class="features">
+                <div class="feature">
+                    <h3>Modo Battle Royale</h3>
+                    <p>Lucha contra docenas de jugadores en un mapa que se reduce, usando habilidades únicas y estrategias para ser el último en pie.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>Multijugador Local</h3>
+                    <p>Juega con amigos en tu misma red local y demuestra quién es el mejor en este frenético combate.</p>
+                </div>
+
+                            
+            <div class="features">
+                <div class="feature cpu-feature">
+                    <h3>Modo CPU</h3>
+                    <p>Practica contra oponentes controlados por la IA antes de enfrentarte a jugadores reales.</p>
+                </div>
+                
+                <div class="feature">
+                    <h3>100% Open Source</h3>
+                    <p>Desarrollado con amor por la comunidad, libre y abierto para que todos puedan contribuir y mejorar el juego.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="characters" class="characters">
+        <div class="container">
+            <h2>Nuestros Personajes</h2>
+            <p class="game-description">
+                Elige entre una amplia variedad de personajes del mundo open source, cada uno con habilidades únicas y estilos de juego diferentes.
+            </p>
+            
+            <div class="character-grid">
+                <!-- Personaje 1 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.4, 1, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/1110206859552da39065475.png" alt="Tux" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Godette y Godot</h3>
+                        <p>Godot es un robot de combate y Godette su compañera humana, juntos son una fuerza imparable.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 2 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.8, 0.8, 0.8, 0.7);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Freedo_icon.png" alt="Freedo" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Freedo</h3>
+                        <p>Un pingüino revolucionario que lucha por la libertad digital con sus ataques rápidos.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 3 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.4, 1, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/1110206859552da39065475.png" alt="Tux" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Tux</h3>
+                        <p>El pingüino más famoso de Linux, listo para el caos con su agilidad y habilidades de hacker.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 4 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.95, 0.65, 0.1, 1.0);">
+                        <img src="https://online.supertuxkart.net/downloads/images/100256664360e06c53eb252.png" alt="Xenia" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Xenia</h3>
+                        <p>Astuta y rápida, usa su ingenio para superar a los oponentes en el campo de batalla.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 5 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(1.0, 0.5, 0.0, 0.8);">
+                        <img src="https://online.supertuxkart.net/downloads/images/131254084364c679c4ce935.png" alt="Mozilla" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Mozilla</h3>
+                        <p>El dragón de fuego que domina la red con sus ataques ardientes.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 6 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.8, 0.8, 0, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/69252485761cdb0f3bd7bb.png" alt="GNU" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>GNU</h3>
+                        <p>Fuerte y resistente, carga contra sus enemigos con la fuerza de un toro.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 7 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.8, 0.2, 0.5, 1.0);">
+                        <img src="https://online.supertuxkart.net/downloads/images/68911237261cd94ac89d62.png" alt="Xue" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Xue</h3>
+                        <p>El ratón de XFCE, pequeño pero con habilidades sorprendentes.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 8 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.5, 0, 0, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/8227980285ce765d27baee.png" alt="Duke" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Duke</h3>
+                        <p>El pato más temido del mundo open source, no subestimes su ferocidad.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 9 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.5, 0.5, 1, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/154485572161cdb2cdea2d4.png" alt="Puffy" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Puffy</h3>
+                        <p>El pulpo de BSD, escurridizo y con múltiples formas de atacar.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 10 -->
+                <div class="character-card locked-character">
+                    <div class="character-image" style="background-color: rgba(0.6, 0.8, 0, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/192859015657bd4d556d037.png" alt="Penny" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Penny</h3>
+                        <p>Una versión especial de Tux con habilidades mejoradas (desbloqueable).</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 11 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.8, 0.2, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/20438319835afe618eca8f8.png" alt="Adiumy" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Adiumy</h3>
+                        <p>El mensajero rápido, se mueve por el campo de batalla como una flecha.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 12 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.6, 0.2, 0.8, 0.9);">
+                        <img src="https://online.supertuxkart.net/downloads/images/26210178161cdb183631b9.png" alt="Purple Pidgin" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Purple Pidgin</h3>
+                        <p>Elegante y preciso, sus ataques son tan rápidos como mensajes instantáneos.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 13 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(1.0, 1.0, 1.0, 0.8);">
+                        <img src="https://online.supertuxkart.net/downloads/images/113457809157bd5f33568d5.png" alt="Big Buck Bunny and Frankie" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Big Buck Bunny and Frankie</h3>
+                        <p>El dúo dinámico, combinando fuerza y carisma en cada movimiento.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 14 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0, 0.6, 0.8, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/17831977096395f12871f79.png" alt="Konqi" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Konqi</h3>
+                        <p>El dragón de KDE, con un arsenal de herramientas letales a su disposición.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 15 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.0, 0.7, 0.3, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/1542081685559edc64160d0.png" alt="Blinky" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Blinky</h3>
+                        <p>El fantasma del código, aparece y desaparece cuando menos lo esperas.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 16 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.3, 0.8, 0.3, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/13246176475d433c18112e7.png" alt="Bugdroid" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Bugdroid</h3>
+                        <p>El androide verde, con una precisión milimétrica en cada ataque.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 17 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.4, 0.8, 0.3, 0.7);">
+                        💻
+                    </div>
+                    <div class="character-info">
+                        <h3>Kodee</h3>
+                        <p>El programador definitivo, convierte bugs en armas letales.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 18 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.8, 0.5, 1.0);">
+                        <img src="https://online.supertuxkart.net/downloads/images/153392961956ba7db858dd5.png" alt="Buggie" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Buggie</h3>
+                        <p>Pequeño pero molesto, se infiltra en los sistemas enemigos.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 19 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.6, 0.2, 0.8, 0.7);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Puppy_logo.svg/1024px-Puppy_logo.svg.png" alt="Puppy Linux" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Puppy Linux</h3>
+                        <p>Pequeño pero potente, con una mordida más fuerte que su ladrido.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 20 -->
+                <div class="character-card locked-character">
+                    <div class="character-image" style="background-color: rgba(1, 0, 0, 0.7);">
+                      <img src="https://i.imgur.com/gqb0IPW.png"
+                             alt="Propietary" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Propietary</h3>
+                        <p>El enemigo número uno del open source (desbloqueable).</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 21 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.2, 0.2, 1.0);">
+                        <img src="https://online.supertuxkart.net/downloads/images/164721878161c866cee9ff3.png" alt="Mini Tux" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Mini Tux</h3>
+                        <p>La versión junior del famoso pingüino, pero igual de peligroso.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 22 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.5, 0.3, 0.1, 0.7);">
+                        <img src="https://avatars.githubusercontent.com/u/15384994?s=200&v=4" alt="Sinbad" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Sinbad</h3>
+                        <p>Un pirata ogro temible que navega los mares digitales en busca de botín.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 23 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(1.0, 1.0, 1.0, 1.0);">
+                        <img src="https://online.supertuxkart.net/downloads/images/234198935631b45464b161.png" alt="Beastie" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Beastie</h3>
+                        <p>El demonio de BSD, tan aterrador como efectivo en combate.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 24 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(1, 0.2, 0.8, 0.9);">
+                        <img src="https://github.com/supertuxkart/stk-website/raw/master/assets/wiki/Character_emule_icon.png" alt="Emule" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Emule</h3>
+                        <p>El pirata digital, compartiendo dolor en lugar de archivos.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 25 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(1, 0, 0, 1);">
+                        <img src="https://online.supertuxkart.net/downloads/images/132911446757c6f3575d9e7.png" alt="Wilber" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Wilber</h3>
+                        <p>La mascota de GIMP, creativo y letal con sus herramientas gráficas.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 26 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(1, 0, 0, 1);">
+                        🌶️
+                    </div>
+                    <div class="character-info">
+                        <h3>Pepper</h3>
+                        <p>Picante y explosiva, no subestimes su poder.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 27 -->
+                <div class="character-card locked-character">
+                    <div class="character-image" style="background-color: rgba(0.9, 0.3, 0.3, 1.0);">
+                        <img src="https://online.supertuxkart.net/downloads/images/167487739957c10a04461e7.png" alt="Kitty" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Kitty</h3>
+                        <p>La gata ninja, sigilosa y mortal (desbloqueable).</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 28 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.8, 0.2, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/164721878161c866cee9ff3.png" alt="Nolok" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Nolok</h3>
+                        <p>Un cocodrilo feroz que acecha en las aguas del código.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 29 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.8, 0.2, 0.7);">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Qwen_logo.svg/1200px-Qwen_logo.svg.png" alt="Qwen" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Qwen</h3>
+                        <p>Un capibara tranquilo pero poderoso cuando se le provoca.</p>
+                    </div>
+                </div>
+                
+                <!-- Personaje 30 -->
+                <div class="character-card">
+                    <div class="character-image" style="background-color: rgba(0.2, 0.8, 0.2, 0.7);">
+                        <img src="https://online.supertuxkart.net/downloads/images/855348329559fba8690787.png" alt="Geeko" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="character-info">
+                        <h3>Geeko</h3>
+                        <p>El camaleónico, adaptándose a cualquier situación de combate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="download">
+        <div class="container">
+            <h2>Descarga el Juego</h2>
+            <p class="game-description">
+                SuperTuxChaos es completamente gratuito y open source. Descárgalo ahora y únete al caos.
+            </p>
+            
+            <div class="download-grid">
+                <div class="download-platform">
+                    <div class="platform-icon">🪟</div>
+                    <h3>Windows</h3>
+                    <a href="#" class="btn">Descargar (64-bit)</a>
+                    <a href="#" class="btn btn-secondary">Descargar (32-bit)</a>
+                </div>
+                
+                <div class="download-platform">
+                    <div class="platform-icon">🐧</div>
+                    <h3>Linux</h3>
+                    <a href="#" class="btn">.deb (Debian/Ubuntu)</a>
+                    <a href="#" class="btn btn-secondary">.rpm (Fedora)</a>
+                    <a href="#" class="btn btn-tertiary">AppImage</a>
+                </div>
+                
+                <div class="download-platform">
+                    <div class="platform-icon">🍏</div>
+                    <h3>macOS</h3>
+                    <a href="#" class="btn">Descargar (.dmg)</a>
+                </div>
+                
+                <div class="download-platform">
+                    <div class="platform-icon">🤖</div>
+                    <h3>Android</h3>
+                    <a href="#" class="btn">Descargar (APK)</a>
+                </div>
+                
+                <div class="download-platform">
+                    <div class="platform-icon">🦡</div>
+                    <h3>Haiku OS</h3>
+                    <a href="#" class="btn">Descargar (.hpkg)</a>
+                </div>
+                
+                <div class="download-platform">
+                    <div class="platform-icon">🔧</div>
+                    <h3>Código Fuente</h3>
+                    <a href="#" class="btn btn-secondary">ZIP</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>SuperTuxChaos es un juego open source desarrollado por la comunidad.</p>
+            <p>© 2023 Libre Dev. Todos los derechos reservados.</p>
+            
+            <div class="social-links">
+                <a href="#">Discord</a>
+                <a href="#">Twitter</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
