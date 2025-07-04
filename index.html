@@ -1,6 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Agrega esto en el <head> de tu HTML -->
+<script>
+// Objeto con todas las traducciones
+
+// Función para cambiar el idioma
+  // Aplicar las traducciones a los elementos de la página
+  document.title = t['title'];
+  document.querySelector('.tagline').textContent = t['tagline'];
+  document.querySelector('a[href="#download"]').textContent = t['download'];
+  document.querySelector('a[href="#characters"]').textContent = t['characters'];
+  document.querySelector('#about h2').textContent = t['about'];
+  document.querySelector('#about .game-description').textContent = t['game-description'];
+  
+  // Traducir características
+  const features = document.querySelectorAll('.feature h3');
+  features[0].textContent = t['feature1'];
+  features[1].textContent = t['feature2'];
+  features[2].textContent = t['feature3'];
+  features[3].textContent = t['feature4'];
+  
+  const featureDescs = document.querySelectorAll('.feature p');
+  featureDescs[0].textContent = t['feature1-desc'];
+  featureDescs[1].textContent = t['feature2-desc'];
+  featureDescs[2].textContent = t['feature3-desc'];
+  featureDescs[3].textContent = t['feature4-desc'];
+  
+  // Traducir sección de personajes
+  document.querySelector('#characters h2').textContent = t['characters-title'];
+  document.querySelector('#characters .game-description').textContent = t['characters-desc'];
+  
+  // Traducir sección de descargas
+  document.querySelector('#download h2').textContent = t['download-title'];
+  document.querySelector('#download .game-description').textContent = t['download-desc'];
+  
+  // Traducir footer
+  const footerTexts = document.querySelectorAll('footer p');
+  footerTexts[0].textContent = t['footer'];
+  footerTexts[1].textContent = t['copyright'];
+}
+
+// Cargar el idioma guardado al iniciar la página
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('preferredLanguage') || 'es';
+  changeLanguage(savedLang);
+});
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperTuxChaos - Battle Royale Open Source</title>
@@ -33,13 +80,15 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            
         }
         
         .header-content {
             position: relative;
             z-index: 2;
         }
-        
+</div>
+
         h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
@@ -265,6 +314,7 @@
 <body>
     <header>
         <div class="header-content">
+<!-- Agrega esto DENTRO del <header>, justo después de <div class="header-content"> -->
             <h1>SuperTuxChaos</h1>
             <p class="tagline">El Battle Royale Open Source más caótico</p>
             <a href="#download" class="btn">Descargar Ahora</a>
@@ -283,22 +333,14 @@
             
             <div class="features">
                 <div class="feature">
-                    <h3>Modo Battle Royale</h3>
-                    <p>Lucha contra docenas de jugadores en un mapa que se reduce, usando habilidades únicas y estrategias para ser el último en pie.</p>
+                    <h3>Modo Cooperativo</h3>
+                    <p>Únete con amigos para derrotar juntos oleadas de enemigos controlados por la IA en desafíos épicos.</p>
                 </div>
-                
-                <div class="feature">
-                    <h3>Multijugador Local</h3>
-                    <p>Juega con amigos en tu misma red local y demuestra quién es el mejor en este frenético combate.</p>
-                </div>
-
                             
-            <div class="features">
-                <div class="feature cpu-feature">
-                    <h3>Modo CPU</h3>
-                    <p>Practica contra oponentes controlados por la IA antes de enfrentarte a jugadores reales.</p>
-                </div>
-                
+<div class="feature">
+    <h3>Modo Solo CPU</h3>
+    <p>Enfrenta a equipos enteros controlados por la inteligencia artificial, perfeccionando tus habilidades sin piedad.</p>
+</div>
                 <div class="feature">
                     <h3>100% Open Source</h3>
                     <p>Desarrollado con amor por la comunidad, libre y abierto para que todos puedan contribuir y mejorar el juego.</p>
@@ -318,7 +360,7 @@
                 <!-- Personaje 1 -->
                 <div class="character-card">
                     <div class="character-image" style="background-color: rgba(0.2, 0.4, 1, 0.7);">
-                        <img src="https://online.supertuxkart.net/downloads/images/1110206859552da39065475.png" alt="Tux" style="width: 100%; height: 100%; object-fit: contain;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Godot_icon.svg" alt="Tux" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                     <div class="character-info">
                         <h3>Godette y Godot</h3>
@@ -539,7 +581,7 @@
                 <!-- Personaje 21 -->
                 <div class="character-card">
                     <div class="character-image" style="background-color: rgba(0.2, 0.2, 0.2, 1.0);">
-                        <img src="https://online.supertuxkart.net/downloads/images/164721878161c866cee9ff3.png" alt="Mini Tux" style="width: 100%; height: 100%; object-fit: contain;">
+                        <img src="https://cdn.pixabay.com/photo/2013/07/13/11/43/tux-158547_960_720.png" alt="Mini Tux" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                     <div class="character-info">
                         <h3>Mini Tux</h3>
@@ -594,11 +636,11 @@
                 <!-- Personaje 26 -->
                 <div class="character-card">
                     <div class="character-image" style="background-color: rgba(1, 0, 0, 1);">
-                        🌶️
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Pepper_and_Carrot_logo_since_October_2015.png/500px-Pepper_and_Carrot_logo_since_October_2015.png" alt="Pepper" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                     <div class="character-info">
                         <h3>Pepper</h3>
-                        <p>Picante y explosiva, no subestimes su poder.</p>
+                        <p>Pepper es la bruja del webcomic "Pepper & Carrot" la invitaron a participar en este juego pero le dijo a su gato que no podía traerlo por motivos de seguridad.</p>
                     </div>
                 </div>
                 
@@ -693,7 +735,7 @@
                 <div class="download-platform">
                     <div class="platform-icon">🔧</div>
                     <h3>Código Fuente</h3>
-                    <a href="#" class="btn btn-secondary">ZIP</a>
+                    <a href="https://archive.org/download/supertuxchaos-publico/supertuxchaos%20publico.zip" class="btn btn-secondary">ZIP</a>
                 </div>
             </div>
         </div>
